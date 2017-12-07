@@ -6,34 +6,24 @@ import PropTypes from "prop-types";
 
 export class GridComponent extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            records: []
-        }
-    }
-
-    // в конструкторе this.props еще не заданы
-    componentDidMount() {
-        this.setState({
-            records: this.props.records
-        })
+    constructor(props) {
+        super(props);
     }
 
     toggleActive(index) {
-        const {records} = this.state;
+        const {records} = this.props.records;
         records[index].active = !records[index].active;
         this.props.onEditRecords(records);
     }
 
     onLastNameBlur(index, lastName) {
-        const {records} = this.state;
+        const {records} = this.props.records;
         records[index].lastName = lastName;
         this.props.onEditRecords(records)
     }
 
     render() {
-        const {records} = this.state;
+        const {records} = this.props;
         return (
             // заюзаем классы из bootstrap
             <table className="table table-striped table-bordered" style={{margin: '20px', width: '400px'}}>
@@ -65,8 +55,8 @@ export class GridComponent extends React.Component {
 }
 
 class GridRow extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             lastName: ''
         };
@@ -75,9 +65,15 @@ class GridRow extends React.Component {
         this.onLastNameBlur = this.onLastNameBlur.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount() { // срабатывает при первой отрисовке
         this.setState({
             lastName: this.props.record.lastName
+        })
+    }
+
+    componentWillReceiveProps(nextProps) { // срабатывает при обновлении пропертей компонента
+        this.setState({
+            lastName: nextProps.record.lastName
         })
     }
 
