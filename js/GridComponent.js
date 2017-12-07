@@ -21,19 +21,15 @@ export class GridComponent extends React.Component {
     }
 
     toggleActive(index) {
-        let {records} = this.state;
+        const {records} = this.state;
         records[index].active = !records[index].active;
-        this.setState({
-            records: records
-        })
+        this.props.onEditRecords(records);
     }
 
     onLastNameBlur(index, lastName) {
-        let {records} = this.props;
+        const {records} = this.state;
         records[index].lastName = lastName;
-        this.setState({
-            records: records
-        })
+        this.props.onEditRecords(records)
     }
 
     render() {
@@ -85,13 +81,13 @@ class GridRow extends React.Component {
         })
     }
 
-    onLastNameChange(event) {
+    onLastNameChange(e) {
         this.setState({
-            lastName: event.target.value
+            lastName: e.target.value
         });
     }
 
-    onLastNameBlur(event) {
+    onLastNameBlur(e) {
         this.props.onLastNameBlur(this.state.lastName);
     }
 
