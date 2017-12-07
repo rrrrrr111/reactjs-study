@@ -1,37 +1,132 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
 import {render} from "react-dom";
+import PropTypes from "prop-types";
 
 
 export class GridComponent extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            records: []
+        }
+    }
+
+    // в конструкторе this.props еще не заданы
+    componentDidMount() {
+        this.setState({
+            records: this.props.records
+        })
+    }
+
+    toggleActive(index) {
+        let {records} = this.state;
+        records[index].active = !records[index].active;
+        this.setState({
+            records: records
+        })
+    }
+
+    onLastNameBlur(index, lastName) {
+        let {records} = this.props;
+        records[index].lastName = lastName;
+        this.setState({
+            records: records
+        })
+    }
+
     render() {
+        const {records} = this.state;
         return (
-            <table className="table table-condensed" style={{margin: '20px'}}>
+            // заюзаем классы из bootstrap
+            <table className="table table-striped table-bordered" style={{margin: '20px', width: '400px'}}>
                 <thead>
                 <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Активный</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                </tr>
+                {   // динамично нарисуем список строк
+                    records.map((record, index) => {
+                        return (
+                            // метод bind привяжет this и index к контексту, т е когда бы он не вызвался this
+                            // будет ссылаться на GridComponent а index на переданный во время bind параметр
+                            // index будет передаваться первым парамтером независимо от последующих вызовов этой функции
+                            <GridRow record={record}
+                                     key={index}
+                                     toggleActive={this.toggleActive.bind(this, index)}
+                                     onLastNameBlur={this.onLastNameBlur.bind(this, index)}
+                            />
+                        );
+                    })}
                 </tbody>
             </table>
         )
     }
 }
+
+class GridRow extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            lastName: ''
+        };
+        // для всех обработчиков событий в React нужно делать привязку контекста
+        this.onLastNameChange = this.onLastNameChange.bind(this);
+        this.onLastNameBlur = this.onLastNameBlur.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            lastName: this.props.record.lastName
+        })
+    }
+
+    onLastNameChange(event) {
+        this.setState({
+            lastName: event.target.value
+        });
+    }
+
+    onLastNameBlur(event) {
+        this.props.onLastNameBlur(this.state.lastName);
+    }
+
+    render() {
+        let {record} = this.props;
+        let {lastName} = this.state;
+        return (
+            <tr>
+                <td>{record.firstName}</td>
+                <td>
+                    <input type="text" value={lastName}
+                           onChange={this.onLastNameChange}
+                           onBlur={this.onLastNameBlur} // будем передавать значение наверх только по потере фокуса
+                    />
+                </td>
+                <td>
+                    <input type="checkbox" checked={record.active}
+                           onChange={this.props.toggleActive}/>
+                </td>
+            </tr>
+        );
+    }
+}
+
+// дефолтные пропсы отобразятся при осутствии оных
+GridRow.defaultProps = {
+    record: {firstName: "N/A", lastName: "N/A", active: false},
+    lastName: ''
+};
+
+// валидатор на проверку типов переданных пропсов
+GridRow.propTypes = {
+    record: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        active: PropTypes.bool.isRequired
+    })
+};
