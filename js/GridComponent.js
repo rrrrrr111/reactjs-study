@@ -11,13 +11,13 @@ export class GridComponent extends React.Component {
     }
 
     toggleActive(index) {
-        const {records} = this.props.records;
+        const {records} = this.props;
         records[index].active = !records[index].active;
         this.props.onEditRecords(records);
     }
 
     onLastNameBlur(index, lastName) {
-        const {records} = this.props.records;
+        const {records} = this.props;
         records[index].lastName = lastName;
         this.props.onEditRecords(records)
     }
