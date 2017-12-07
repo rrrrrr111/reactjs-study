@@ -1,5 +1,7 @@
 import React from "react";
 import {render} from "react-dom";
+import {GridComponent} from "./GridComponent.js";
+
 
 class App extends React.Component {
 
@@ -7,17 +9,12 @@ class App extends React.Component {
         return (
             <div>
                 <div>Hi, I'm div</div>
-                <h1>Hi, I'm header inside div</h1>
-                <ul>
-                    <li>Hi, I'm list item inside list inside div</li>
-                    <li>Hi, I'm list item inside list inside div</li>
-                </ul>
             </div>
         )
     }
 }
 
 render(
-    <App></App>,
+    <GridComponent></GridComponent>,
     document.getElementById('app')
 );
