@@ -1,20 +1,23 @@
-/**
- * Created by Roman on 07.12.2017.
- */
+import React from "react";
+import {render} from "react-dom";
 
-var app = React.createElement('div', {},
-    React.createElement('h1',{}, 'hi i am header inside div'),
-    React.createElement('ul', {},
-        React.createElement('li', {},
-            React.createElement('h2',{}, 'hi i am list item')
-        ),
-        React.createElement('li', {},
-            React.createElement('h2',{}, 'hi i am list item')
+class App extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <div>Hi, I'm div</div>
+                <h1>Hi, I'm header inside div</h1>
+                <ul>
+                    <li>Hi, I'm list item inside list inside div</li>
+                    <li>Hi, I'm list item inside list inside div</li>
+                </ul>
+            </div>
         )
-    )
-);
+    }
+}
 
-ReactDOM.render(
-    app,
+render(
+    <App></App>,
     document.getElementById('app')
 );
