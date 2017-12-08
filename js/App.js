@@ -1,7 +1,9 @@
 import React from "react";
 import {render} from "react-dom";
-import {GridComponent} from "./GridComponent.js";
+import {Grid} from "./Grid.js";
 import {SearchInput} from "./SearchInput.js";
+import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
+import {SummaryUsers} from "./SummaryUsers.js";
 
 
 class App extends React.Component {
@@ -45,7 +47,12 @@ class App extends React.Component {
         return (
             <div>
                 <SearchInput onSearchInputChange={this.onSearchInputChange}/>
-                <GridComponent records={records} onEditRecords={this.onEditRecords}/>
+                <Grid records={records} onEditRecords={this.onEditRecords}>
+                    <div>
+                        <SummaryUsers records={records}/>
+                        <SummaryActiveUsers records={records}/>
+                    </div>
+                </Grid>
             </div>
         )
     }

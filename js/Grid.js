@@ -4,7 +4,7 @@ import {render} from "react-dom";
 import PropTypes from "prop-types";
 
 
-export class GridComponent extends React.Component {
+export class Grid extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,31 +25,34 @@ export class GridComponent extends React.Component {
     render() {
         const {records} = this.props;
         return (
-            // заюзаем классы из bootstrap
-            <table className="table table-striped table-bordered" style={{margin: '20px', width: '400px'}}>
-                <thead>
-                <tr>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Активный</th>
-                </tr>
-                </thead>
-                <tbody>
-                {   // динамично нарисуем список строк
-                    records.map((record, index) => {
-                        return (
-                            // метод bind привяжет this и index к контексту, т е когда бы он не вызвался this
-                            // будет ссылаться на GridComponent а index на переданный во время bind параметр
-                            // index будет передаваться первым парамтером независимо от последующих вызовов этой функции
-                            <GridRow record={record}
-                                     key={index}
-                                     toggleActive={this.toggleActive.bind(this, index)}
-                                     onLastNameBlur={this.onLastNameBlur.bind(this, index)}
-                            />
-                        );
-                    })}
-                </tbody>
-            </table>
+            <div>
+                {/*заюзаем классы из bootstrap*/}
+                <table className="table table-striped table-bordered" style={{margin: '20px', width: '400px'}}>
+                    <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Активный</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {   // динамично нарисуем список строк
+                        records.map((record, index) => {
+                            return (
+                                // метод bind привяжет this и index к контексту, т е когда бы он не вызвался this
+                                // будет ссылаться на GridComponent а index на переданный во время bind параметр
+                                // index будет передаваться первым парамтером независимо от последующих вызовов этой функции
+                                <GridRow record={record}
+                                         key={index}
+                                         toggleActive={this.toggleActive.bind(this, index)}
+                                         onLastNameBlur={this.onLastNameBlur.bind(this, index)}
+                                />
+                            );
+                        })}
+                    </tbody>
+                </table>
+                {this.props.children}
+            </div>
         )
     }
 }
