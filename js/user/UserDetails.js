@@ -12,11 +12,23 @@ class UserDetails extends React.Component {
     }
 
     render() {
-        const user = this.props.userDetails[this.props.params.id];
+        const id = this.props.params.id;
+        const user = this.props.userDetails[id];
 
         if (user === undefined) {
             return (<div>Пользователь не найден</div>)
         }
+
+        let avatar = parseInt(id) % 2 !== 0 ? (
+            <figure>
+                <img src="http://via.placeholder.com/250x250"
+                     alt="" className="img-circle img-responsive"/>
+            </figure>)
+            : (<figure>
+                <img
+                    src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-2.jpg"
+                    alt="" className="img-circle-img-responsive"/>
+            </figure>)
 
         return (
             <div className="container">
@@ -39,10 +51,7 @@ class UserDetails extends React.Component {
                                     </p>
                                 </div>
                                 <div className="col-xs-12 col-sm-4 text-center">
-                                    <figure>
-                                        <img src="http://via.placeholder.com/250x250"
-                                             alt="" className="img-circle img-responsive"/>
-                                    </figure>
+                                    {avatar}
                                 </div>
                             </div>
                         </div>

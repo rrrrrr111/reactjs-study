@@ -20,9 +20,11 @@ class Grid extends React.Component {
     }
 
     onLastNameBlur(index, lastName) {
-        const {records} = this.props;
-        records[index].lastName = lastName;
-        this.props.onEditRecords(records)
+        const {dispatch} = this.props;
+        dispatch({
+            type: 'TABLE_RECORD_LAST_NAME_CHANGE',
+            value: {index, lastName}
+        });
     }
 
     render() {
@@ -66,7 +68,5 @@ class Grid extends React.Component {
 }
 
 export default connect((state) => {
-    return {
-        records: state.records
-    }
+    return {}
 })(Grid)

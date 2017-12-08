@@ -13,8 +13,23 @@ export function tableReducer(state = recordsSource, action) {
             newState[index].active = !newState[index].active;
             return newState;
         }
+        case 'TABLE_RECORD_LAST_NAME_CHANGE' : {
+            let newState = [...state];
+            let {index, lastName} = action.value;
+
+            newState[index].lastName = lastName;
+            return newState;
+        }
         case "TABLE_RECORD_SEARCH_FILTER": {
-            //Filter will be implemented later
+            let newState = [...state];
+            let {searchStr} = action.value;
+
+            return recordsSource.filter((record) => {
+                return (
+                    record.firstName.toUpperCase().includes(searchStr)
+                    || record.lastName.toUpperCase().includes(searchStr)
+                )
+            });
         }
         default:
             return state

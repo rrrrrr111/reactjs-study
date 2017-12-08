@@ -1,7 +1,7 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
 import Grid from "./Grid.js";
-import {SearchInput} from "./SearchInput.js";
+import SearchInput from "./SearchInput.js";
 import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
 import {SummaryUsers} from "./SummaryUsers.js";
 import {connect} from "react-redux";
@@ -13,9 +13,6 @@ class Table extends React.Component {
     constructor(props) {
         super(props);
         this.state = {records: []};
-
-        this.onSearchInputChange = this.onSearchInputChange.bind(this);
-        this.onEditRecords = this.onEditRecords.bind(this);
     }
 
     // в конструкторе this.props еще не заданы, кроме того это позволит отрисовать пустой каркас
@@ -25,35 +22,27 @@ class Table extends React.Component {
         });
     }
 
-    onSearchInputChange(e) {
-        let value = e.target.value;
-        let searchStr = value.toUpperCase();
-        let filteredRecords = this.props.records.filter((record) => {
-            return (
-                record.firstName.toUpperCase().includes(searchStr)
-                || record.lastName.toUpperCase().includes(searchStr)
-            )
-        });
+    componentWillReceiveProps(nextProps) {
+        // Поскольку этот компонент прокидывает дочерним не пропсы которые ему прокидывает редух,
+        // а упралвяет хранением в собственном стейт, то ему нужно также реализовать метод ожидающий обновления свойств.
+        // Локальный стейт позволяет сделать предварительное отображение компонента и потом перерисовать его после
+        // получения пропертей
         this.setState({
-            records: filteredRecords
-        });
-    };
-
-    onEditRecords(records) {
-        this.setState({
-            records: records
+            records: nextProps.records
         });
     }
 
     render() {
+        let records = this.state.records;
+
         return (
             <div>
-                <SearchInput onSearchInputChange={this.onSearchInputChange}/>
-                <Grid records={this.state.records} onEditRecords={this.onEditRecords}>
+                <SearchInput/>
+                <Grid records={records}>
                     <div style={{margin: '20px', width: '400px'}}>
-                        <SummaryUsers records={this.state.records}/>
+                        <SummaryUsers records={records}/>
                         &nbsp;&nbsp;
-                        <SummaryActiveUsers records={this.state.records}/>
+                        <SummaryActiveUsers records={records}/>
                     </div>
                 </Grid>
             </div>
