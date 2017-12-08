@@ -1,39 +1,18 @@
 require("bootstrap/dist/css/bootstrap.css");
 require("./user-details.css");
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+
 import React from "react";
 
-const detailsRecords = {
-    1: {
-        id: 1,
-        name: "Игорь Клечковский",
-        prof: "Web Designer / UI",
-        hobbies: ["Read", "out with friends", "listen to music"],
-        skills: ["html5", "css3", "react", 'java8']
-    },
-    2: {
-        id: 2,
-        name: "John Doe",
-        prof: "Nice guy",
-        hobbies: ["Likes drinking wine"],
-        skills: ["html", "javascript", "redux"]
-    },
-    3: {
-        id: 3,
-        name: "Mary Moe",
-        prof: "Cute girl",
-        hobbies: ["Likes playing xbox whole days long"],
-        skills: ["Fortran", "Lua", "R#"]
-    }
-};
-
-export class UserDetails extends React.Component {
+class UserDetails extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
     render() {
-        const user = detailsRecords[this.props.params.id];
+        const user = this.props.userDetails[this.props.params.id];
 
         if (user === undefined) {
             return (<div>Пользователь не найден</div>)
@@ -73,3 +52,14 @@ export class UserDetails extends React.Component {
         )
     }
 }
+
+UserDetails.propTypes = {
+    userDetails: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+    return {
+        userDetails: state.userDetails
+    }
+}
+export default connect(mapStateToProps)(UserDetails)

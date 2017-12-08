@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from "react-dom";
 import {hashHistory, Link, Route, Router} from "react-router";
-import {UserDetails} from "./user/UserDetails";
+import UserDetails from "./user/UserDetails";
 import Table from "./table/Table";
 import {NativeReactPage} from "./native/NativeReactPage";
 import {Provider} from "react-redux";
