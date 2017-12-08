@@ -1,6 +1,7 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
 import {render} from "react-dom";
+import {hashHistory} from 'react-router'
 import PropTypes from "prop-types";
 
 
@@ -30,6 +31,7 @@ export class Grid extends React.Component {
                 <table className="table table-striped table-bordered" style={{margin: '20px', width: '400px'}}>
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Имя</th>
                         <th>Фамилия</th>
                         <th>Активный</th>
@@ -70,6 +72,7 @@ class GridRow extends React.Component {
         // для всех обработчиков событий в React нужно делать привязку контекста
         this.onLastNameChange = this.onLastNameChange.bind(this);
         this.onLastNameBlur = this.onLastNameBlur.bind(this);
+        this.showUserDetails = this.showUserDetails.bind(this);
     }
 
     componentDidMount() { // срабатывает при первой отрисовке
@@ -94,11 +97,17 @@ class GridRow extends React.Component {
         this.props.onLastNameBlur(this.state.lastName);
     }
 
+    showUserDetails(e){
+        e.preventDefault();
+        hashHistory.push(`/user/${this.props.record.id}`);
+    }
+
     render() {
         let {record} = this.props;
         let {lastName} = this.state;
         return (
             <tr>
+                <th onClick={this.showUserDetails}><a href="#">{record.id}</a></th>
                 <td>{record.firstName}</td>
                 <td>
                     <input type="text" value={lastName}

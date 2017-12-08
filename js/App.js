@@ -14,7 +14,7 @@ class App extends React.Component {
                 <h1>Awesome app</h1>
                 <ul role="nav">
                     <li><Link to="/table">Table</Link></li>
-                    <li><Link to="/user">UserDetails</Link></li>
+                    <li><Link to="/user/1">UserDetails</Link></li>
                     <li><Link to="/native">NativeReactPage</Link></li>
                 </ul>
                 {this.props.children}
@@ -28,7 +28,9 @@ class App extends React.Component {
 render(<Router history={hashHistory}>
         <Route path="/" component={App}>
             <Route path="table" component={Table}/>
-            <Route path="user" component={UserDetails}/>
+            <Route path="user" component={UserDetails}>
+                <Route path="/user/:id" component={UserDetails}/>
+            </Route>
             <Route path="native" component={NativeReactPage}/>
         </Route>
     </Router>,

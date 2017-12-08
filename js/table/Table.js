@@ -7,9 +7,9 @@ import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
 import {SummaryUsers} from "./SummaryUsers.js";
 
 const dataSource = [
-    {firstName: "John", lastName: "Doe", active: false},
-    {firstName: "Mary", lastName: "Moe", active: false},
-    {firstName: "Peter", lastName: "Noname", active: true}
+    {id: 1, firstName: "John", lastName: "Doe", active: false},
+    {id: 2, firstName: "Mary", lastName: "Moe", active: false},
+    {id: 3, firstName: "Peter", lastName: "Noname", active: true}
 ];
 
 export class Table extends React.Component {
