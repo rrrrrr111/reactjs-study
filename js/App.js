@@ -1,9 +1,11 @@
 import React from "react";
 import {render} from "react-dom";
+import {Router, Route, Link, hashHistory} from "react-router";
 import {Grid} from "./Grid.js";
 import {SearchInput} from "./SearchInput.js";
 import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
 import {SummaryUsers} from "./SummaryUsers.js";
+import {UserDetails} from "./UserDetails.js";
 
 
 class App extends React.Component {
@@ -48,15 +50,22 @@ class App extends React.Component {
             <div>
                 <SearchInput onSearchInputChange={this.onSearchInputChange}/>
                 <Grid records={records} onEditRecords={this.onEditRecords}>
-                    <div>
-                        <SummaryUsers records={records}/>
-                        <SummaryActiveUsers records={records}/>
+                    <div style={{margin: '20px', width: '400px'}}>
+                        <SummaryUsers records={records}/>&nbsp;&nbsp;<SummaryActiveUsers records={records}/>
                     </div>
                 </Grid>
+                <UserDetails user={user}/>
             </div>
         )
     }
 }
+
+const user = {
+    name: "Игорь Клечковский",
+    prof: "Web Designer / UI",
+    hobbies: ["Read", "out with friends", "listen to music"],
+    skills: ["html5","css3","react",'java8']
+};
 
 const dataSource = [
     {firstName: "John", lastName: "Doe", active: false},
@@ -64,7 +73,4 @@ const dataSource = [
     {firstName: "Peter", lastName: "Noname", active: true}
 ];
 
-render(
-    <App dataSource={dataSource}/>,
-    document.getElementById('app')
-);
+render(<App dataSource={dataSource}/>, document.getElementById('app'));

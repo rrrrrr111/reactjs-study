@@ -52,6 +52,10 @@ export class Grid extends React.Component {
                     </tbody>
                 </table>
                 {this.props.children}
+
+                {/* React.cloneElement(..) нужно сделать если вы хотите передать пропертя не
+                    уазывая провертя сверху самого чилдового элемента */}
+                {/*{React.cloneElement(this.props.children, {records: this.props.records})}*/}
             </div>
         )
     }

@@ -11,7 +11,7 @@ export class SummaryUsers extends React.Component {
 
     render() {
         return (
-            <div>Всего пользователей: {this.props.records.length}</div>
+            <span>Всего пользователей: {this.props.records.length}</span>
         )
     }
 }
