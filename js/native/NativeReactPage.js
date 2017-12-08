@@ -1,4 +1,6 @@
-function NativeReactPage(props) {
+import React from "react";
+
+export function NativeReactPage(props) {
     return (
         React.createElement('div', {},
             React.createElement('h1', {}, 'I\'m page header'),

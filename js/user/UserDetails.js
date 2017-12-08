@@ -4,6 +4,13 @@ import React from "react";
 import {render} from "react-dom";
 
 
+const userStore = {
+    name: "Игорь Клечковский",
+    prof: "Web Designer / UI",
+    hobbies: ["Read", "out with friends", "listen to music"],
+    skills: ["html5", "css3", "react", 'java8']
+};
+
 export class UserDetails extends React.Component {
 
     constructor(props) {
@@ -11,7 +18,7 @@ export class UserDetails extends React.Component {
     }
 
     render() {
-        const {user} = this.props;
+        const user = userStore;
 
         return (
             <div className="container">
