@@ -1,9 +1,10 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
-import Grid from "./Grid.js";
-import SearchInput from "./SearchInput.js";
-import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
-import {SummaryUsers} from "./SummaryUsers.js";
+import Grid from "./Grid";
+import SearchInput from "./SearchInput";
+import {SummaryActiveUsers} from "./SummaryActiveUsers";
+import {SummaryUsers} from "./SummaryUsers";
+import {startLoading, addData, stopLoading} from "./actions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -12,14 +13,37 @@ class Table extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {records: []};
+        this.state = {records: [], filtered: [], loading: false};
     }
 
     // в конструкторе this.props еще не заданы, кроме того это позволит отрисовать пустой каркас
     componentDidMount() {
+        this.refs.filterInput && this.refs.filterInput.focus();
+        this.loadData();
+        this.pushState(this.props);
+    }
+
+    pushState(props) {
         this.setState({
-            records: this.props.records
+            records: props.records,
+            filtered: props.filtered,
+            loading: props.loading
         });
+    }
+
+    loadData() {
+        let {dispatch} = this.props;
+        dispatch(startLoading());
+        fetch('http://localhost:4730')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (json) {
+                dispatch(addData(json.tableRecords))
+            })
+            .then(function () {
+                dispatch(stopLoading());
+            })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -27,18 +51,16 @@ class Table extends React.Component {
         // а упралвяет хранением в собственном стейт, то ему нужно также реализовать метод ожидающий обновления свойств.
         // Локальный стейт позволяет сделать предварительное отображение компонента и потом перерисовать его после
         // получения пропертей
-        this.setState({
-            records: nextProps.records
-        });
+        this.pushState(nextProps);
     }
 
     render() {
-        let records = this.state.records;
+        let {records, filtered, loading} = this.state;
 
         return (
             <div>
                 <SearchInput/>
-                <Grid records={records}>
+                <Grid records={records} filtered={filtered} loading={loading}>
                     <div style={{margin: '20px', width: '400px'}}>
                         <SummaryUsers records={records}/>
                         &nbsp;&nbsp;
@@ -52,13 +74,17 @@ class Table extends React.Component {
 
 // проверим тип проперти таблицы
 Grid.propTypes = {
-    records: PropTypes.array.isRequired
+    records: PropTypes.array.isRequired,
+    filtered: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 // замапим стейт редух на пропсы этого компонента
 function mapStateToProps(state) {
     return {
-        records: state.records
+        records: state.table.records,
+        filtered: state.table.filtered,
+        loading: state.table.loading
     }
 }
 

@@ -1,7 +1,5 @@
-
 export const TABLE_RECORD_TOGGLE_ACTIVE = 'TABLE_RECORD_TOGGLE_ACTIVE';
 export function toggleActive(index) {
-
     return {
         type: TABLE_RECORD_TOGGLE_ACTIVE,
         value: index
@@ -22,4 +20,26 @@ export function onFilterSearch(e) {
         type: TABLE_FILTER_SEARCH,
         value: {searchStr: e.target.value.toUpperCase()}
     };
+}
+
+export const START_LOADING = 'START_LOADING';
+export function startLoading() {
+    return {
+        type: START_LOADING
+    }
+}
+
+export const STOP_LOADING = 'STOP_LOADING';
+export function stopLoading() {
+    return {
+        type: STOP_LOADING
+    }
+}
+
+export const ADD_DATA = 'ADD_DATA';
+export function addData(value) {
+    return {
+        type: ADD_DATA,
+        value
+    }
 }

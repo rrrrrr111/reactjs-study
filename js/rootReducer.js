@@ -5,5 +5,5 @@ import {userDetailsReducer} from "./user/reducer";
 
 export const rootReducer = combineReducers({
     userDetails: userDetailsReducer,
-    records: tableReducer
+    table: tableReducer
 });

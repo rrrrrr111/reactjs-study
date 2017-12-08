@@ -1,12 +1,19 @@
-import {TABLE_RECORD_LAST_NAME_CHANGE, TABLE_FILTER_SEARCH, TABLE_RECORD_TOGGLE_ACTIVE} from "./actions";
+import {
+    ADD_DATA,
+    START_LOADING,
+    STOP_LOADING,
+    TABLE_FILTER_SEARCH,
+    TABLE_RECORD_LAST_NAME_CHANGE,
+    TABLE_RECORD_TOGGLE_ACTIVE
+} from "./actions";
 
-let recordsSource = [
-    {id: 1, firstName: "John", lastName: "Doe", active: false},
-    {id: 2, firstName: "Mary", lastName: "Moe", active: false},
-    {id: 3, firstName: "Peter", lastName: "Noname", active: true}
-];
+let tableState = {
+    records: [],
+    filtered: [],
+    loading: false
+};
 
-export function tableReducer(state = recordsSource, action) {
+export function tableReducer(state = tableState, action) {
     switch (action.type) {
         case TABLE_RECORD_TOGGLE_ACTIVE : {
             let newState = [...state];
@@ -31,6 +38,17 @@ export function tableReducer(state = recordsSource, action) {
                     record.firstName.toUpperCase().includes(searchStr)
                     || record.lastName.toUpperCase().includes(searchStr)
                 )
+            });
+        }
+        case START_LOADING: {
+            return Object.assign({}, state, {loading: true});
+        }
+        case STOP_LOADING: {
+            return Object.assign({}, state, {loading: false});
+        }
+        case ADD_DATA: {
+            return Object.assign({}, state, {
+                records: action.value
             });
         }
         default:
