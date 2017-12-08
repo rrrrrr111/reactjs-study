@@ -6,6 +6,16 @@ let recordsSource = [
 
 export function tableReducer(state = recordsSource, action) {
     switch (action.type) {
+        case 'TABLE_RECORD_TOGGLE_ACTIVE' : {
+            let newState = [...state];
+            let index = action.value;
+
+            newState[index].active = !newState[index].active;
+            return newState;
+        }
+        case "TABLE_RECORD_SEARCH_FILTER": {
+            //Filter will be implemented later
+        }
         default:
             return state
     }

@@ -1,6 +1,5 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
-import {render} from "react-dom";
 
 
 export class SearchInput extends React.Component {

@@ -1,6 +1,5 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
-import {render} from "react-dom";
 import {hashHistory} from "react-router";
 import PropTypes from "prop-types";
 

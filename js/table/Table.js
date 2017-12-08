@@ -1,7 +1,6 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
-import {render} from "react-dom";
-import {Grid} from "./Grid.js";
+import Grid from "./Grid.js";
 import {SearchInput} from "./SearchInput.js";
 import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
 import {SummaryUsers} from "./SummaryUsers.js";
@@ -62,7 +61,7 @@ class Table extends React.Component {
     }
 }
 
-// проверим тип пропиерти таблицы
+// проверим тип проперти таблицы
 Grid.propTypes = {
     records: PropTypes.array.isRequired
 };
@@ -74,5 +73,6 @@ function mapStateToProps(state) {
     }
 }
 
-// экспортируем не оригинальный компонент а компонент обернутый редухом
+// экспортируем не оригинальный компонент а компонент обернутый редухом,
+// если экспортировать просто класс не обернутый то будет чистый реакт без редуховых фич
 export default connect(mapStateToProps)(Table)

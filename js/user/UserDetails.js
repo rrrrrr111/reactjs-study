@@ -1,7 +1,6 @@
 require("bootstrap/dist/css/bootstrap.css");
 require("./user-details.css");
 import React from "react";
-import {render} from "react-dom";
 
 const detailsRecords = {
     1: {
