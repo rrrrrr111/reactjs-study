@@ -54,7 +54,7 @@ export function tableReducer(state = tableInitialState, action) {
 
         case TABLE_ADD_DATA: {
             let records = action.value;
-            return Object.assign({}, state, {records: records, filtered: records});
+            return Object.assign({}, state, {records, filtered: records});
         }
 
         default:

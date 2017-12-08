@@ -15,7 +15,7 @@ class UserDetails extends React.Component {
         const id = this.props.params.id;
         const user = this.props.userDetails[id];
 
-        if (user === undefined) {
+        if (user === undefined || user === null) {
             return (<div>Пользователь не найден</div>)
         }
 
@@ -67,8 +67,6 @@ UserDetails.propTypes = {
 };
 
 function mapStateToProps(state) {
-    return {
-        userDetails: state.userDetails
-    }
+    return {userDetails: state.userDetails};
 }
 export default connect(mapStateToProps)(UserDetails)

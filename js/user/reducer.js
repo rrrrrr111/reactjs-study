@@ -1,12 +1,13 @@
 import {ADD_USER_DETAILS_DATA} from "./actions";
 
-let userDetailsState = {};
+let initialUserDetailsState = {};
 
-export function userDetailsReducer(state = userDetailsState, action) {
+export function userDetailsReducer(state = initialUserDetailsState, action) {
     switch (action.type) {
 
         case ADD_USER_DETAILS_DATA: {
-            return action.value;
+            let userDetails = action.value;
+            return Object.assign({}, state, userDetails);
         }
         default:
             return state

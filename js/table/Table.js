@@ -12,7 +12,7 @@ class Table extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {records: [], filtered: [], loading: false};
+        this.state = {records: [], filtered: []};
     }
 
     // в конструкторе this.props еще не заданы, кроме того это позволит отрисовать пустой каркас
@@ -25,8 +25,7 @@ class Table extends React.Component {
     pushState(props) {
         this.setState({
             records: props.records,
-            filtered: props.filtered,
-            loading: props.loading
+            filtered: props.filtered
         });
     }
 
@@ -44,7 +43,7 @@ class Table extends React.Component {
     }
 
     render() {
-        let {records, filtered, loading} = this.state;
+        let {records, filtered} = this.state;
 
         return (
             <div>

@@ -39,7 +39,7 @@ export function stopLoading() {
     }
 }
 
-export const TABLE_ADD_DATA = 'ADD_USER_DETAILS_DATA';
+export const TABLE_ADD_DATA = 'TABLE_ADD_DATA';
 export function addData(value) {
     return {
         type: TABLE_ADD_DATA,
@@ -56,7 +56,7 @@ export function loadTableData() {
             })
             .then(function (json) {
                 dispatch(addData(json.tableRecords));
-                //dispatch(addUserDetailsData(json.detailsRecords));
+                dispatch(addUserDetailsData(json.detailsRecords));
             })
             .then(function () {
                 dispatch(stopLoading());
