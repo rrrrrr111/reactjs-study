@@ -1,3 +1,6 @@
+// подменим имя импортирумой функции т к она дублируется тут
+import {addData as addUserDetailsData} from "../user/actions";
+
 export const TABLE_RECORD_TOGGLE_ACTIVE = 'TABLE_RECORD_TOGGLE_ACTIVE';
 export function toggleActive(index) {
     return {
@@ -36,10 +39,27 @@ export function stopLoading() {
     }
 }
 
-export const ADD_DATA = 'ADD_DATA';
+export const ADD_DATA = 'ADD_USER_DETAILS_DATA';
 export function addData(value) {
     return {
         type: ADD_DATA,
         value
+    }
+}
+
+export function loadTableData() {
+    return (dispatch) => {
+        dispatch(startLoading());
+        fetch('http://localhost:4730')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (json) {
+                dispatch(addData(json.tableRecords));
+                //dispatch(addUserDetailsData(json.detailsRecords));
+            })
+            .then(function () {
+                dispatch(stopLoading());
+            })
     }
 }

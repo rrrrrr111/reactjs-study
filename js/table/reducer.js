@@ -33,12 +33,13 @@ export function tableReducer(state = tableState, action) {
             let newState = [...state];
             let {searchStr} = action.value;
 
-            return recordsSource.filter((record) => {
+            let filtered = tableState.records.filter((record) => {
                 return (
                     record.firstName.toUpperCase().includes(searchStr)
                     || record.lastName.toUpperCase().includes(searchStr)
                 )
             });
+            return Object.assign({}, state, {filtered});
         }
         case START_LOADING: {
             return Object.assign({}, state, {loading: true});
@@ -47,9 +48,8 @@ export function tableReducer(state = tableState, action) {
             return Object.assign({}, state, {loading: false});
         }
         case ADD_DATA: {
-            return Object.assign({}, state, {
-                records: action.value
-            });
+            let records = action.value;
+            return Object.assign({}, state, {records});
         }
         default:
             return state

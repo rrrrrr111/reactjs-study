@@ -4,7 +4,7 @@ import Grid from "./Grid";
 import SearchInput from "./SearchInput";
 import {SummaryActiveUsers} from "./SummaryActiveUsers";
 import {SummaryUsers} from "./SummaryUsers";
-import {startLoading, addData, stopLoading} from "./actions";
+import {loadTableData} from "./actions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -33,17 +33,7 @@ class Table extends React.Component {
 
     loadData() {
         let {dispatch} = this.props;
-        dispatch(startLoading());
-        fetch('http://localhost:4730')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (json) {
-                dispatch(addData(json.tableRecords))
-            })
-            .then(function () {
-                dispatch(stopLoading());
-            })
+        dispatch(loadTableData());
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,11 +71,7 @@ Grid.propTypes = {
 
 // замапим стейт редух на пропсы этого компонента
 function mapStateToProps(state) {
-    return {
-        records: state.table.records,
-        filtered: state.table.filtered,
-        loading: state.table.loading
-    }
+    return state.table;
 }
 
 // экспортируем не оригинальный компонент а компонент обернутый редухом,

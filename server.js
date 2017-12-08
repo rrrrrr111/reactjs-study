@@ -43,14 +43,14 @@ var id = 3;
 
 function generateData() {
     id++;
-    recordsSource.push({firstName: "Generated", lastName: "Randomly", active: false, id: id});
-    detailsRecords.push({
+    tableRecords.push({firstName: "Generated", lastName: "Randomly", active: false, id: id});
+    detailsRecords[id] = {
         id: id,
         name: "GeneratedRandomly",
         about: "Generated About",
         hobby: "Generated Hobby",
         skills: ["G", "E", "N", "E", "R", "A", "T", "E", "D", id]
-    });
+    };
 }
 
 app.get('/', function (req, res) {
