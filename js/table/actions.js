@@ -25,24 +25,24 @@ export function onFilterSearch(e) {
     };
 }
 
-export const START_LOADING = 'START_LOADING';
+export const TABLE_START_LOADING = 'TABLE_START_LOADING';
 export function startLoading() {
     return {
-        type: START_LOADING
+        type: TABLE_START_LOADING
     }
 }
 
-export const STOP_LOADING = 'STOP_LOADING';
+export const TABLE_STOP_LOADING = 'TABLE_STOP_LOADING';
 export function stopLoading() {
     return {
-        type: STOP_LOADING
+        type: TABLE_STOP_LOADING
     }
 }
 
-export const ADD_DATA = 'ADD_USER_DETAILS_DATA';
+export const TABLE_ADD_DATA = 'ADD_USER_DETAILS_DATA';
 export function addData(value) {
     return {
-        type: ADD_DATA,
+        type: TABLE_ADD_DATA,
         value
     }
 }

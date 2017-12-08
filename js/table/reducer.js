@@ -1,58 +1,72 @@
 import {
-    ADD_DATA,
-    START_LOADING,
-    STOP_LOADING,
+    TABLE_ADD_DATA,
     TABLE_FILTER_SEARCH,
     TABLE_RECORD_LAST_NAME_CHANGE,
-    TABLE_RECORD_TOGGLE_ACTIVE
+    TABLE_RECORD_TOGGLE_ACTIVE,
+    TABLE_START_LOADING,
+    TABLE_STOP_LOADING
 } from "./actions";
 
-let tableState = {
+let tableInitialState = {
     records: [],
     filtered: [],
     loading: false
 };
 
-export function tableReducer(state = tableState, action) {
+// в редьюсер прилетает та часть стора к которой он прикреплен в общем сторе,
+// при первом вызове соотвтесвеено там прилетит undefined
+export function tableReducer(state = tableInitialState, action) {
+
     switch (action.type) {
+
         case TABLE_RECORD_TOGGLE_ACTIVE : {
-            let newState = [...state];
+            let records = [...state.records];  // создадим новый массив, концепция immutable
             let index = action.value;
 
-            newState[index].active = !newState[index].active;
-            return newState;
-        }
-        case TABLE_RECORD_LAST_NAME_CHANGE : {
-            let newState = [...state];
-            let {index, lastName} = action.value;
-
-            newState[index].lastName = lastName;
-            return newState;
-        }
-        case TABLE_FILTER_SEARCH: {
-            let newState = [...state];
-            let {searchStr} = action.value;
-
-            let filtered = tableState.records.filter((record) => {
-                return (
-                    record.firstName.toUpperCase().includes(searchStr)
-                    || record.lastName.toUpperCase().includes(searchStr)
-                )
-            });
-            return Object.assign({}, state, {filtered});
-        }
-        case START_LOADING: {
-            return Object.assign({}, state, {loading: true});
-        }
-        case STOP_LOADING: {
-            return Object.assign({}, state, {loading: false});
-        }
-        case ADD_DATA: {
-            let records = action.value;
+            records[index].active = !records[index].active;
+            // при возврате из редьюсера нужно делать новый объект, тут везде концепция immutable
             return Object.assign({}, state, {records});
         }
+
+        case TABLE_RECORD_LAST_NAME_CHANGE : {
+            let records = [...state.records];
+            let {index, lastName} = action.value;
+
+            records[index].lastName = lastName;
+            return Object.assign({}, state, {records});
+        }
+
+        case TABLE_FILTER_SEARCH: {
+            let {records} = state;
+            let {searchStr} = action.value;
+
+            let filtered = filterRecords(records, searchStr);
+            return Object.assign({}, state, {filtered});
+        }
+
+        case TABLE_START_LOADING: {
+            return Object.assign({}, state, {loading: true});
+        }
+
+        case TABLE_STOP_LOADING: {
+            return Object.assign({}, state, {loading: false});
+        }
+
+        case TABLE_ADD_DATA: {
+            let records = action.value;
+            return Object.assign({}, state, {records: records, filtered: records});
+        }
+
         default:
             return state
     }
 }
 
+let filterRecords = (records, searchStr) => {
+    return records.filter((record) => {
+        return (
+            record.firstName.toUpperCase().includes(searchStr)
+            || record.lastName.toUpperCase().includes(searchStr)
+        )
+    });
+};

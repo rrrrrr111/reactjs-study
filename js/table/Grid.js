@@ -3,6 +3,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {GridRow} from "./GridRow";
 import {changeLastName, toggleActive} from "./actions";
+import PropTypes from "prop-types";
 
 
 class Grid extends React.Component {
@@ -61,6 +62,11 @@ class Grid extends React.Component {
         )
     }
 }
+
+// проверим тип проперти таблицы
+Grid.propTypes = {
+    records: PropTypes.array.isRequired
+};
 
 export default connect((state) => {
     return {}

@@ -6,7 +6,6 @@ import {SummaryActiveUsers} from "./SummaryActiveUsers";
 import {SummaryUsers} from "./SummaryUsers";
 import {loadTableData} from "./actions";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 
 
 class Table extends React.Component {
@@ -50,7 +49,7 @@ class Table extends React.Component {
         return (
             <div>
                 <SearchInput/>
-                <Grid records={records} filtered={filtered} loading={loading}>
+                <Grid records={filtered}>
                     <div style={{margin: '20px', width: '400px'}}>
                         <SummaryUsers records={records}/>
                         &nbsp;&nbsp;
@@ -61,13 +60,6 @@ class Table extends React.Component {
         )
     }
 }
-
-// проверим тип проперти таблицы
-Grid.propTypes = {
-    records: PropTypes.array.isRequired,
-    filtered: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired
-};
 
 // замапим стейт редух на пропсы этого компонента
 function mapStateToProps(state) {
