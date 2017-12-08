@@ -5,14 +5,11 @@ import {Grid} from "./Grid.js";
 import {SearchInput} from "./SearchInput.js";
 import {SummaryActiveUsers} from "./SummaryActiveUsers.js";
 import {SummaryUsers} from "./SummaryUsers.js";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
-const dataSource = [
-    {id: 1, firstName: "John", lastName: "Doe", active: false},
-    {id: 2, firstName: "Mary", lastName: "Moe", active: false},
-    {id: 3, firstName: "Peter", lastName: "Noname", active: true}
-];
 
-export class Table extends React.Component {
+class Table extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,14 +22,14 @@ export class Table extends React.Component {
     // в конструкторе this.props еще не заданы, кроме того это позволит отрисовать пустой каркас
     componentDidMount() {
         this.setState({
-            records: dataSource
+            records: this.props.records
         });
     }
 
     onSearchInputChange(e) {
         let value = e.target.value;
         let searchStr = value.toUpperCase();
-        let filteredRecords = dataSource.filter((record) => {
+        let filteredRecords = this.props.records.filter((record) => {
             return (
                 record.firstName.toUpperCase().includes(searchStr)
                 || record.lastName.toUpperCase().includes(searchStr)
@@ -64,3 +61,18 @@ export class Table extends React.Component {
         )
     }
 }
+
+// проверим тип пропиерти таблицы
+Grid.propTypes = {
+    records: PropTypes.array.isRequired
+};
+
+// замапим стейт редух на пропсы этого компонента
+function mapStateToProps(state) {
+    return {
+        records: state.records
+    }
+}
+
+// экспортируем не оригинальный компонент а компонент обернутый редухом
+export default connect(mapStateToProps)(Table)

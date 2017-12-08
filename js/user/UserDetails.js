@@ -36,6 +36,10 @@ export class UserDetails extends React.Component {
     render() {
         const user = detailsRecords[this.props.params.id];
 
+        if (user === undefined) {
+            return (<div>Пользователь не найден</div>)
+        }
+
         return (
             <div className="container">
                 <div className="row">
