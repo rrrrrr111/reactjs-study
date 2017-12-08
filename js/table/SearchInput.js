@@ -1,17 +1,14 @@
 require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
 import {connect} from "react-redux";
+import {onFilterSearch} from "./actions";
 
 
 class SearchInput extends React.Component {
 
     onSearchInputChange(e) {
         const {dispatch} = this.props;
-
-        dispatch({
-            type: 'TABLE_RECORD_SEARCH_FILTER',
-            value: {searchStr: e.target.value.toUpperCase()}
-        })
+        dispatch(onFilterSearch(e))
     }
 
     render() {

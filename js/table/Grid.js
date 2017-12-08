@@ -2,6 +2,7 @@ require("bootstrap/dist/css/bootstrap.css");
 import React from "react";
 import {connect} from "react-redux";
 import {GridRow} from "./GridRow";
+import {changeLastName, toggleActive} from "./actions";
 
 
 class Grid extends React.Component {
@@ -13,18 +14,12 @@ class Grid extends React.Component {
     toggleActive(index) {
         // dispatch это специальная функция из редух для диспатча изменений к стору
         const {records, dispatch} = this.props;
-        dispatch({
-            type: 'TABLE_RECORD_TOGGLE_ACTIVE',
-            value: index
-        });
+        dispatch(toggleActive(index));
     }
 
     onLastNameBlur(index, lastName) {
         const {dispatch} = this.props;
-        dispatch({
-            type: 'TABLE_RECORD_LAST_NAME_CHANGE',
-            value: {index, lastName}
-        });
+        dispatch(changeLastName(index, lastName));
     }
 
     render() {
