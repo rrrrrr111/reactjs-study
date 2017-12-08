@@ -12,26 +12,23 @@ class Table extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {records: [], filtered: []};
+        this.state = {records: [], filtered: [], loading: true};
     }
 
     // в конструкторе this.props еще не заданы, кроме того это позволит отрисовать пустой каркас
     componentDidMount() {
         this.refs.filterInput && this.refs.filterInput.focus();
-        this.loadData();
-        this.pushState(this.props);
+
+        let {dispatch} = this.props;
+        dispatch(loadTableData());
     }
 
     pushState(props) {
         this.setState({
             records: props.records,
-            filtered: props.filtered
+            filtered: props.filtered,
+            loading: props.loading
         });
-    }
-
-    loadData() {
-        let {dispatch} = this.props;
-        dispatch(loadTableData());
     }
 
     componentWillReceiveProps(nextProps) {
@@ -43,20 +40,22 @@ class Table extends React.Component {
     }
 
     render() {
-        let {records, filtered} = this.state;
-
-        return (
-            <div>
-                <SearchInput/>
-                <Grid records={filtered}>
-                    <div style={{margin: '20px', width: '400px'}}>
-                        <SummaryUsers records={records}/>
-                        &nbsp;&nbsp;
-                        <SummaryActiveUsers records={records}/>
-                    </div>
-                </Grid>
-            </div>
-        )
+        let {records, filtered, loading} = this.state;
+        return (loading ?
+            (<div style={{margin: 20, width: 400, padding: 20}}>
+                    Идет загрузка данных ...
+                </div>
+            ) : (
+                <div>
+                    <SearchInput/>
+                    <Grid records={filtered}>
+                        <div style={{margin: 20, width: 400}}>
+                            <SummaryUsers records={records}/>
+                            &nbsp;&nbsp;
+                            <SummaryActiveUsers records={records}/>
+                        </div>
+                    </Grid>
+                </div>));
     }
 }
 

@@ -47,14 +47,14 @@ function generateData() {
     detailsRecords[id] = {
         id: id,
         name: "GeneratedRandomly",
-        about: "Generated About",
-        hobby: "Generated Hobby",
+        prof: "Generated About",
+        hobbies: ["Generated Hobby"],
         skills: ["G", "E", "N", "E", "R", "A", "T", "E", "D", id]
     };
 }
 
 app.get('/', function (req, res) {
-    //generateData();
+    generateData();
     res.json({
         tableRecords: tableRecords,
         detailsRecords: detailsRecords
